@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Nearby Flights</h1>
+    </header>
+
+    <main>
+        <div class="controls">
+            <label for="radius">Radius (miles):</label>
+            <input type="number" id="radius" value="15" min="1" max="250">
+            <button id="refresh">Refresh</button>
+        </div>
+
+        <table id="flights-table">
+            <thead>
+                <tr>
+                    <th>Callsign</th>
+                    <th>Registration</th>
+                    <th>Type</th>
+                    <th>Altitude (ft)</th>
+                    <th>Ground Speed (kt)</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be injected dynamically -->
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <p>Powered by <a href="https://api.adsb.lol" target="_blank">adsb.lol API</a></p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
