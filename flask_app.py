@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from adsb_api import aircraft_in_radius
+from adsb_api import aircraft_in_radius, aircraft_squawk
 from models import Flight
 import json
 
@@ -37,5 +37,25 @@ def get_flights():
             mimetype="application/json"
         )
 
+
+@app.route("/squawk")
+def get_squawk_flights():
+    """Fetch flites squawking specified code"""
+    squawk = float(request.args.get("squawk", 1200))
+    try:
+        flights_raw = aircraft_squawk(squawk)
+        return app.response_class(
+            response=json.dumps(flights_raw, ensure_ascii=False, indent=2),
+            status=200,
+            mimetype="application/json"
+        )
+    except Exception as e:
+        return app.response_class(
+            response=json.dumps({"error": str(e)}, ensure_ascii=False, indent=2),
+            status=500,
+            mimetype="application/json"
+        )
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
+
